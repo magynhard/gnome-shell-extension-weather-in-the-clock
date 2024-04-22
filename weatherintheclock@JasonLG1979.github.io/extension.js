@@ -18,35 +18,18 @@
  * If this extension breaks your desktop you get to keep all of the pieces...
  */
 
-import { Clutter, GLib, GObject, St } from 'gi://Clutter';
-import config from 'resource:///org/gnome/shell/misc/config.js';
+import Clutter from 'gi://Clutter';
+import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
+import St from 'gi://St';
+import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const [major, minor] = config.PACKAGE_VERSION.split('.').map(s => Number(s));
 
-let panelWeather = null;
+class PanelWeather extends St.BoxLayout {
 
-function enable() {
-    if (!panelWeather) {
-        let statusArea = imports.ui.main.panel.statusArea;
-        let dateMenu = statusArea.dateMenu;
-        let weather = dateMenu._weatherItem._weatherClient;
-        let network = (major < 43) ? statusArea.aggregateMenu._network : statusArea.quickSettings._network;
-        let networkIcon = network ? network._primaryIndicator : null;
-        panelWeather = new PanelWeather(weather, networkIcon);
-        dateMenu.get_first_child().insert_child_above(panelWeather, dateMenu._clockDisplay);
+    static {
+        GObject.registerClass(this);
     }
-}
-
-function disable() {
-    if (panelWeather) {
-        panelWeather.destroy();
-        panelWeather = null;
-    }
-}
-
-const PanelWeather = GObject.registerClass({
-    GTypeName: 'PanelWeather'
-}, class PanelWeather extends St.BoxLayout {
     _init(weather, networkIcon) {
         super._init({
             y_align: Clutter.ActorAlign.CENTER,
@@ -134,4 +117,28 @@ const PanelWeather = GObject.registerClass({
         this._weather = null;
         this._networkIcon = null;
     }
-});
+}
+
+
+export default class PanelWeatherExtension extends Extension {
+
+    static panelWeather = null;
+    enable() {
+        if (!PanelWeatherExtension.panelWeather) {
+            let statusArea = imports.ui.main.panel.statusArea;
+            let dateMenu = statusArea.dateMenu;
+            let weather = dateMenu._weatherItem._weatherClient;
+            let network = statusArea.quickSettings._network;
+            let networkIcon = network ? network._primaryIndicator : null;
+            PanelWeatherExtension.panelWeather = new PanelWeather(weather, networkIcon);
+            dateMenu.get_first_child().insert_child_above(PanelWeatherExtension.panelWeather, dateMenu._clockDisplay);
+        }
+    }
+
+    disable() {
+        if (PanelWeatherExtension.panelWeather) {
+            PanelWeatherExtension.panelWeather.destroy();
+            PanelWeatherExtension.panelWeather = null;
+        }
+    }
+}
