@@ -1,3 +1,15 @@
+Fork of https://github.com/JasonLG1979/gnome-shell-extension-weather-in-the-clock made compatible with latest Gnome 45 Shell.
+
+To install, clone this repo and run the install script:
+```
+cd /tmp
+git clone https://github.com/magynhard/gnome-shell-extension-weather-in-the-clock
+cd gnome-shell-extension-weather-in-the-clock
+./install_local.sh
+```
+
+Then logoff and login again, to reload the extension. Ensure, the extension is enabled in the "Extensions" app of Gnome.
+
 # gnome-shell-extension-weather-in-the-clock
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -5,7 +17,7 @@
 
 <b>GNOME Weather is required for this extension to function.</b>
 
-![Screenshot](https://github.com/JasonLG1979/gnome-shell-extensions-weather-in-the-clock/blob/master/data/Screenshot.png)
+![Screenshot](data/Screenshot.png)
 
 ## Installation
 
