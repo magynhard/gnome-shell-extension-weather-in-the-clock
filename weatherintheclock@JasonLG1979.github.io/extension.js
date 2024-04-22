@@ -18,8 +18,10 @@
  * If this extension breaks your desktop you get to keep all of the pieces...
  */
 
-const {Clutter, GLib, GObject, St} = imports.gi;
-const [major, minor] = imports.misc.config.PACKAGE_VERSION.split('.').map(s => Number(s));
+import { Clutter, GLib, GObject, St } from 'gi://Clutter';
+import config from 'resource:///org/gnome/shell/misc/config.js';
+
+const [major, minor] = config.PACKAGE_VERSION.split('.').map(s => Number(s));
 
 let panelWeather = null;
 
