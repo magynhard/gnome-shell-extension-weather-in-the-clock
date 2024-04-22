@@ -1,0 +1,1 @@
+cp -a weatherintheclock@JasonLG1979.github.io ~/.local/share/gnome-shell/extensions/
