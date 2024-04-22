@@ -23,7 +23,7 @@ import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import St from 'gi://St';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
-
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 class PanelWeather extends St.BoxLayout {
 
@@ -120,12 +120,13 @@ class PanelWeather extends St.BoxLayout {
 }
 
 
+
 export default class PanelWeatherExtension extends Extension {
 
     static panelWeather = null;
     enable() {
         if (!PanelWeatherExtension.panelWeather) {
-            let statusArea = imports.ui.main.panel.statusArea;
+            let statusArea = Main.panel.statusArea;
             let dateMenu = statusArea.dateMenu;
             let weather = dateMenu._weatherItem._weatherClient;
             let network = statusArea.quickSettings._network;
